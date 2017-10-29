@@ -4,20 +4,21 @@
 #include "edge.h"
 #include "node.h"
 
-
-Edge::Edge(int id,Node* start, Node* end) :mId(id){
+Edge::Edge(int id, Node* start, Node* end) :
+	mId(id) {
 	mNode[0] = start;
 	mNode[1] = end;
 
-	mDPointX = -1;//(mNode[0]->GetX() + mNode[1]->GetX()) / 2;
-	mDPointY = -1;//(mNode[0]->GetY() + mNode[1]->GetY()) / 2;
+	mDPointX = -1;	//(mNode[0]->GetX() + mNode[1]->GetX()) / 2;
+	mDPointY = -1;	//(mNode[0]->GetY() + mNode[1]->GetY()) / 2;
 
-	mFontHandle = CreateFontToHandle(NULL, 10, 3);
+	mFontHandle = CreateFontToHandle(NULL, FONT_SIZE_E, 3);
 }
 
 
 Edge::~Edge()
 {
+	DeleteFontToHandle(mFontHandle);
 }
 
 void Edge::update(){
@@ -55,15 +56,13 @@ bool Edge::checkNode(Node* node) {
 }
 
 bool Edge::ContainsPoint(int x, int y) {
-
-
 	if (mDPointX == -1 || mDPointY == -1) {
 		// 直線
 		int x0 = mNode[0]->GetX(), x1 = mNode[1]->GetX();
 		int y0 = mNode[0]->GetY(), y1 = mNode[1]->GetY();
 		int L1 = sqrt(pow(x1 - x0, 2.0) + pow(y1 - y0, 2.0));
 		int L2 = sqrt(pow(x - x0, 2.0) + pow(y - y0, 2.0));
-		return (((x1 - x0)*(y - y0) - (y1 - y0)*(x - x0)) / L1) <= 10;
+		return abs(((x1 - x0)*(y - y0) - (y1 - y0)*(x - x0)) / L1) <= 10;
 	}
 	else {
 		// ベジェ曲線
@@ -83,6 +82,7 @@ bool Edge::ContainsPoint(int x, int y) {
 }
 
 int Edge::GetId() { return mId; }
+Node* Edge::getNode(int i) { return mNode[i]; }
 
 void Edge::SetDPoint(int x,int y) { 
 	// 始点と終点の真ん中の点

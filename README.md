@@ -1,14 +1,18 @@
 DrawMathGraph
 ====
 
-グラフ理論用のグラフを描くツールです！！！  
-最終的には色んなアルゴリズムを適用できるようなプログラムにしたいです！！！！  
+実行ファイル  
+[32bit](https://raw.githubusercontent.com/ugonight/DrawMathGraph/master/Release/DrawMathGraph.exe)  
+[64bit](https://raw.githubusercontent.com/ugonight/DrawMathGraph/master/x64/Release/DrawMathGraph.exe)  
 
 ## Description
 
+グラフ理論用のグラフを描くツールです！！！  
+最終的には色んなアルゴリズムを適用できるようなプログラムにしたいです！！！！  
 
 ## Demo
 
+![demo](https://github.com/ugonight/DrawMathGraph/blob/master/demo.gif)
 
 ## Requirement
 
@@ -29,6 +33,8 @@ DXライブラリを使用してます
 
 ## Licence
 
+著作権を侵害するような行為以外はなんでも大丈夫です！！（なんでも大丈夫とは言っていない）  
+改良したりしてお使いください！！  
 
 ## Author
 

@@ -6,6 +6,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(800, 600, 16);
 	ChangeWindowMode(TRUE);
 	//SetBackgroundColor(255, 255, 255);
+	SetMainWindowText("DrawMathGraph");
+	SetWindowText("DrawMathGraph");
+	SetWindowIconID(101);
 
 	if (DxLib_Init() == -1) return -1;  
 	

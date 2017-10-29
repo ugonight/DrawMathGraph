@@ -1,3 +1,4 @@
+#include<string>
 #include"DxLib.h"
 
 #include "control.h"
@@ -7,15 +8,18 @@
 
 Control::Control() : 
 	mDragNode(-1),mDragEdge(-1),
-	mDrawingLineNode(-1)
+	mDrawingLineNode(-1),
+	mInfoStr("")
 {
 	//mNode.push_back(new Node(100, 100));
 	mCursor = new Cursor();
+	mFontHandle = CreateFontToHandle(NULL, FONT_SIZE_C, 3);
 }
 
 
 Control::~Control()
 {
+	DeleteFontToHandle(mFontHandle);
 }
 
 void Control::update() {
@@ -33,6 +37,9 @@ void Control::draw() {
 		edge->draw();
 
 	mCursor->draw();
+
+	DrawFormatStringToHandle(0, 0, GetColor(255, 255, 255), mFontHandle, mInfoStr.c_str());
+
 }
 
 void Control::ClickEvent() {
@@ -44,6 +51,7 @@ void Control::ClickEvent() {
 		for (auto node : mNode) {
 			if (hit = node->ContainsPoint(mCursor->GetX(), mCursor->GetY())) {
 				nodeNum = i;
+				mInfoStr = getNodeInfo(node.get());
 				break;
 			}
 			i++;
@@ -92,11 +100,19 @@ void Control::ClickEvent() {
 			/*std::vector<std::shared_ptr<Edge>>::iterator*/ auto it = mEdge.begin();
 			while (it != mEdge.end()) {
 				if (it->get()->checkNode(mNode[nodeNum].get())) {
+					//Ú‘±“_‚©‚ç•Ó‚ÌŠÖŒW‚ğíœ
+					it->get()->getNode(0)->DeleteConnectedEdge(it->get());
+					it->get()->getNode(1)->DeleteConnectedEdge(it->get());
+					
 					it = mEdge.erase(it);
 				}
 				else it++;
 			}
 			//“_‚ğÁ‚·
+			for (auto node : mNode[nodeNum]->GetNextNode()) {
+				//“_‚ÌŠÖŒW‚ğíœ
+				node->DeleteNextNode(mNode[nodeNum].get());
+			}
 			mNode.erase(mNode.begin() + nodeNum);
 			return;
 		}
@@ -110,6 +126,7 @@ void Control::ClickEvent() {
 		for (auto edge : mEdge) {
 			if (hit = edge->ContainsPoint(mCursor->GetX(), mCursor->GetY())) {
 				edgeNum = i;
+				mInfoStr = getEdgeInfo(edge.get());
 				break;
 			}
 			i++;
@@ -126,6 +143,12 @@ void Control::ClickEvent() {
 
 		//•Óíœ
 		if (mCursor->GetCursorNum() == 2 && hit) {
+			// Ú‘±“_‚ÌŠÖŒW‚ğíœ
+			mEdge[edgeNum]->getNode(0)->DeleteConnectedEdge(mEdge[edgeNum].get());
+			mEdge[edgeNum]->getNode(0)->DeleteNextNode(mEdge[edgeNum]->getNode(1));
+			mEdge[edgeNum]->getNode(1)->DeleteConnectedEdge(mEdge[edgeNum].get());
+			mEdge[edgeNum]->getNode(1)->DeleteNextNode(mEdge[edgeNum]->getNode(0));
+
 			mEdge.erase(mEdge.begin() + edgeNum);
 			return;
 		}
@@ -185,13 +208,42 @@ void Control::UpEvent() {
 						}
 					}
 					// ü‚ğ¶¬
-					mEdge.push_back(std::make_shared<Edge>(id, mNode[mDrawingLineNode].get(), node.get()));
+					auto newEdge = std::make_shared<Edge>(id, mNode[mDrawingLineNode].get(), node.get());
+					mEdge.push_back(newEdge);
+					// Ú‘±ŠÖŒW‚ğ’Ç‰Á
+					mNode[mDrawingLineNode].get()->AddNextNode(node.get());
+					mNode[mDrawingLineNode].get()->AddConnectedEdge(newEdge.get());
+					node.get()->AddNextNode(mNode[mDrawingLineNode].get());
+					node.get()->AddConnectedEdge(newEdge.get());
 				}
 				break;
 			}
 			i++;
 		}
 
+		mDrawingLineNode = -1;
 		mDragNode = -1;
 	}
+}
+
+std::string Control::getNodeInfo(Node* node) {
+	std::string result = "V" + std::to_string(node->GetId());
+	// Ú‘±“_
+	result += "\nNode:";
+	for (auto n : node->GetNextNode()) {
+		result += " V" + std::to_string(n->GetId());
+	}
+	// Ú‘±•Ó
+	result += "\nEdge:";
+	for (auto e : node->GetConnectedEdge()) {
+		result += " E" + std::to_string(e->GetId());
+	}
+	return result;
+}
+
+std::string Control::getEdgeInfo(Edge* edge){
+	std::string result = "E" + std::to_string(edge->GetId())
+		+ "\nNode:V" + std::to_string(edge->getNode(0)->GetId()) + " V" + std::to_string(edge->getNode(1)->GetId());
+
+	return result;
 }

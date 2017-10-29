@@ -1,4 +1,5 @@
 #pragma once
+#define FONT_SIZE_E 15
 
 class Node;
 
@@ -18,9 +19,9 @@ public:
 	void draw();
 
 	int GetId();
+	Node* getNode(int i);
 
 	void SetDPoint(int x,int y);
-
 
 	bool checkNode( Node* node);		// 指定した点が端点にあるか確認する					
 	bool ContainsPoint(int x, int y);	// ポイントが辺と接しているか返す
