@@ -1,16 +1,19 @@
-﻿  control.cpp
+﻿  main.cpp
+  myProcess.cpp
+myProcess.cpp(16): warning C4018: '>': signed と unsigned の数値を比較しようとしました。
+  control.cpp
   cursor.cpp
   edge.cpp
-edge.cpp(38): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
-edge.cpp(44): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-edge.cpp(46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-edge.cpp(63): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-edge.cpp(64): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-  main.cpp
+System\edge.cpp(44): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+System\edge.cpp(50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+System\edge.cpp(53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+System\edge.cpp(74): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+System\edge.cpp(75): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
   node.cpp
-node.cpp(23): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-node.cpp(24): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+System\node.cpp(23): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+System\node.cpp(24): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  process.cpp
   コード生成しています。
-  All 531 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 594 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   DrawMathGraph.vcxproj -> C:\Users\ugonight\Documents\Visual Studio 2017\Projects\work\DrawMathGraph\Release\DrawMathGraph.exe

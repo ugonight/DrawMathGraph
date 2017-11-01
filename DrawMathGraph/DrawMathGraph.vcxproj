@@ -138,20 +138,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="control.cpp" />
-    <ClCompile Include="cursor.cpp" />
-    <ClCompile Include="edge.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="node.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="control.h" />
-    <ClInclude Include="cursor.h" />
-    <ClInclude Include="edge.h" />
-    <ClInclude Include="node.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="..\Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="myProcess.cpp" />
+    <ClCompile Include="System\control.cpp" />
+    <ClCompile Include="System\cursor.cpp" />
+    <ClCompile Include="System\edge.cpp" />
+    <ClCompile Include="System\node.cpp" />
+    <ClCompile Include="System\process.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="System\control.h" />
+    <ClInclude Include="System\cursor.h" />
+    <ClInclude Include="System\edge.h" />
+    <ClInclude Include="System\node.h" />
+    <ClInclude Include="System\process.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
