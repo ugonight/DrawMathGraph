@@ -2,8 +2,8 @@ DrawMathGraph
 ====
 
 実行ファイル  
-[32bit](https://raw.githubusercontent.com/ugonight/DrawMathGraph/master/Release/DrawMathGraph.exe)  
-[64bit](https://raw.githubusercontent.com/ugonight/DrawMathGraph/master/x64/Release/DrawMathGraph.exe)  
+[32bit](https://raw.githubusercontent.com/ugonight/DrawMathGraph/master/x86.zip)  
+[64bit](https://raw.githubusercontent.com/ugonight/DrawMathGraph/master/x64.zip)  
 
 ## Description
 
