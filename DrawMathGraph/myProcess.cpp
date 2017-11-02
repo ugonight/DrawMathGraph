@@ -26,9 +26,10 @@ void Process::run() {
 
 	// 2.全ての点を塗るまで繰り返す
 	bool loop = true, next;
-	int n[3], id;
+	int n[3], id, x = 0;
 	SRand((unsigned)time(NULL));
 	while (loop) {
+		x++;
 		n[0] = GetRand(255); n[1] = GetRand(255); n[2] = GetRand(255);	// GetRand() : 乱数の取得（DxLibの関数）
 		// 2-1.点を順番に見て塗ってない点を色nで塗る
 		id = 0;
@@ -61,5 +62,5 @@ void Process::run() {
 	}
 
 	// 文字を表示
-	setString("success : welsh_powell_algorithm");
+	setString("χ = " + std::to_string(x));
 }

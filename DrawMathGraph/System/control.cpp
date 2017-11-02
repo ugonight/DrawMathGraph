@@ -17,22 +17,41 @@ Control::Control() :
 	mCursor = new Cursor();
 	mProcess = new Process(this);
 	mFontHandle = CreateFontToHandle(NULL, FONT_SIZE_C, 3);
+	mInputHandle = 0;
 }
 
 
 Control::~Control()
 {
 	DeleteFontToHandle(mFontHandle);
+	DeleteKeyInput(mInputHandle);
 }
 
 void Control::update() {
 	mCursor->update();
+
+	// クリックイベント
 	if (mCursor->GetClickL()) ClickEvent();
 	else if (mCursor->GetInputL()) InputEvent();
 	else if (mCursor->GetUpL()) UpEvent();
 
+	// カウンター
 	if (mCount > 0) mCount++;
 	if (mCount > 30)mCount = 0;
+
+	// 値入力
+	if (CheckKeyInput(mInputHandle) && mInputHandle != 0) {
+		char str[256];
+		GetKeyInputString(str, mInputHandle);
+		if (mInfoEdgeNum == -1) {
+			mNode[mInfoNodeNum]->SetValue(str);
+		}
+		else {
+			mEdge[mInfoEdgeNum]->SetValue(str);
+		}
+		DeleteKeyInput(mInputHandle);
+		mInputHandle = 0;
+	}
 }
 
 void Control::draw() {
@@ -46,11 +65,19 @@ void Control::draw() {
 
 	DrawFormatStringToHandle(0, 0, GetColor(255, 255, 255), mFontHandle, mInfoStr.c_str());
 
+	//値入力
+	if (!CheckKeyInput(mInputHandle)) {
+		DrawKeyInputModeString(700, 0);
+		DrawFormatStringToHandle(340, 0, GetColor(255, 255, 255), mFontHandle, "Value > ");
+		DrawKeyInputString(400, 0, mInputHandle);
+	}
 	//runボタン
-	DrawBox(0, 600 - 50, 80, 600, GetColor(255, 255, 255), TRUE);
-	int w = GetDrawStringWidthToHandle("run", 3, mFontHandle);
-	DrawStringToHandle(40 - w / 2, 600 - 25 - FONT_SIZE_C / 2, "run", GetColor(0, 0, 0), mFontHandle);
-	DrawStringToHandle(90, 600 - 50, mProcessInfoStr.c_str(), GetColor(255, 255, 255), mFontHandle);
+	if (mCursor->GetCursorNum() == 1) {
+		DrawBox(0, 600 - 50, 80, 600, GetColor(255, 255, 255), TRUE);
+		int w = GetDrawStringWidthToHandle("run", 3, mFontHandle);
+		DrawStringToHandle(40 - w / 2, 600 - 25 - FONT_SIZE_C / 2, "run", GetColor(0, 0, 0), mFontHandle);
+		DrawStringToHandle(90, 600 - 50, mProcessInfoStr.c_str(), GetColor(255, 255, 255), mFontHandle);
+	}
 }
 
 void Control::ClickEvent() {
@@ -176,14 +203,9 @@ void Control::ClickEvent() {
 				mCount++;
 			}
 			else {
-				char str[256];
-				KeyInputString(x, y - FONT_SIZE_C, 255, str, TRUE);
-				if (mInfoEdgeNum == -1) {
-					mNode[mInfoNodeNum]->SetValue(str);
-				}
-				else {
-					mEdge[mInfoEdgeNum]->SetValue(str);
-				}
+				//KeyInputString(x, y - FONT_SIZE_C, 255, str, TRUE);
+				mInputHandle = MakeKeyInput(256, TRUE, FALSE, FALSE);
+				SetActiveKeyInput(mInputHandle);
 			}
 		}
 	}
@@ -193,6 +215,7 @@ void Control::ClickEvent() {
 		if (mCursor->GetX() >= 0 && mCursor->GetX() <= 80 && mCursor->GetY() >= 600 - 50 && mCursor->GetY() <= 600) {
 			mProcess->reset(mNode, mEdge);
 			mProcess->run();
+
 		}
 	}
 }

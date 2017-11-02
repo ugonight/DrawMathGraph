@@ -52,4 +52,9 @@
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="cursor.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

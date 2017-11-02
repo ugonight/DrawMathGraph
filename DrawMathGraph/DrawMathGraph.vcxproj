@@ -138,7 +138,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\Resource.rc" />
+    <ResourceCompile Include="..\Resource.rc">
+      <DeploymentContent>false</DeploymentContent>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -155,6 +157,11 @@
     <ClInclude Include="System\edge.h" />
     <ClInclude Include="System\node.h" />
     <ClInclude Include="System\process.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="cursor.png">
+      <DeploymentContent>false</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

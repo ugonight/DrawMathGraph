@@ -19,7 +19,7 @@ private:
 	int mDragNode, mDragEdge;			// 移動する辺
 	int mDrawingLineNode;				// 線を引き始めた始点の点
 	
-	int mFontHandle;
+	int mFontHandle, mInputHandle;
 	std::string mInfoStr;
 	std::string mProcessInfoStr;
 	int mCount, mInfoNodeNum, mInfoEdgeNum;
