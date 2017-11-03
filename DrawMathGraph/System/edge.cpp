@@ -53,7 +53,7 @@ void Edge::draw() {
 					DrawFormatStringToHandle(x, y, GetColor(100, 100, 100), mFontHandle, "%d", mId);
 				}
 				else {
-					DrawFormatStringToHandle((mNode[0]->GetX() + mNode[1]->GetX()) / 2, (mNode[0]->GetY() + mNode[1]->GetY()) / 2, GetColor(100, 100, 100), mFontHandle, "%s", mValue.c_str());
+					DrawFormatStringToHandle(x, y, GetColor(100, 100, 100), mFontHandle, "%s", mValue.c_str());
 				}
 			}
 			px = x;

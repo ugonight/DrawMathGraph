@@ -1,4 +1,7 @@
+// Processクラスを参照
 #include"System\process.h"
+
+// 必要なライブラリをインクルード
 #include"DxLib.h"
 #include <time.h>
 

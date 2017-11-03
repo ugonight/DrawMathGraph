@@ -23,10 +23,12 @@ private:
 	std::string mInfoStr;
 	std::string mProcessInfoStr;
 	int mCount, mInfoNodeNum, mInfoEdgeNum;
+	std::string mScsho; int mInputP;
 
-	void ClickEvent();
-	void InputEvent();
-	void UpEvent();
+	void ClickEvent();	// マウスがクリックされたときのイベント
+	void InputEvent();	// マウスが押されている時のイベント
+	void UpEvent();		// マウスが離された時のイベント
+	void command();		// コマンド処理
 
 	std::string getNodeInfo(Node* node);
 	std::string getEdgeInfo(Edge* edge);

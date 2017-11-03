@@ -1,4 +1,5 @@
 #include<string>
+#include<fstream>
 #include"DxLib.h"
 
 #include "control.h"
@@ -7,11 +8,12 @@
 #include "edge.h"
 #include "process.h"
 
-Control::Control() : 
-	mDragNode(-1),mDragEdge(-1),
+Control::Control() :
+	mDragNode(-1), mDragEdge(-1),
 	mDrawingLineNode(-1),
 	mInfoStr(""), mProcessInfoStr(""),
-	mCount(0),mInfoNodeNum(-1), mInfoEdgeNum(-1)
+	mCount(0), mInfoNodeNum(-1), mInfoEdgeNum(-1),
+	mScsho(""), mInputP(0)
 {
 	//mNode.push_back(new Node(100, 100));
 	mCursor = new Cursor();
@@ -52,6 +54,8 @@ void Control::update() {
 		DeleteKeyInput(mInputHandle);
 		mInputHandle = 0;
 	}
+
+	command();
 }
 
 void Control::draw() {
@@ -60,8 +64,6 @@ void Control::draw() {
 		node->draw();
 	for (auto edge : mEdge)
 		edge->draw();
-
-	mCursor->draw();
 
 	DrawFormatStringToHandle(0, 0, GetColor(255, 255, 255), mFontHandle, mInfoStr.c_str());
 
@@ -78,6 +80,15 @@ void Control::draw() {
 		DrawStringToHandle(40 - w / 2, 600 - 25 - FONT_SIZE_C / 2, "run", GetColor(0, 0, 0), mFontHandle);
 		DrawStringToHandle(90, 600 - 50, mProcessInfoStr.c_str(), GetColor(255, 255, 255), mFontHandle);
 	}
+
+	// スクショ
+	if (mScsho != "") {
+		SaveDrawScreenToPNG(0, 0, 800, 600, mScsho.c_str());
+		mScsho = "";
+	}
+
+
+	mCursor->draw();
 }
 
 void Control::ClickEvent() {
@@ -288,6 +299,29 @@ void Control::UpEvent() {
 
 		mDrawingLineNode = -1;
 		mDragNode = -1;
+	}
+}
+
+void Control::command() {
+	if (CheckHitKey(KEY_INPUT_LCONTROL) != 0 || CheckHitKey(KEY_INPUT_RCONTROL) != 0) {
+		// スクショ
+		if (CheckHitKey(KEY_INPUT_P) != 0 && !mInputP) {
+			// 被りチェック
+			int i = 0;
+			std::ifstream fin;
+			do {
+				i++;
+				fin.close();
+				fin.open("screenshot" + std::to_string(i) + ".png", std::ios::in | std::ios::binary);
+			} while (fin.is_open());
+
+			std::string fileName = "screenshot" + std::to_string(i) + ".png";
+			mScsho = fileName;
+			// SaveDrawScreenToPNG(0, 0, 800, 600, fileName.c_str());	// drawで呼び出し
+		}
+
+
+		mInputP = CheckHitKey(KEY_INPUT_P);
 	}
 }
 
